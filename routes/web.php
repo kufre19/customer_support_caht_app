@@ -1,5 +1,7 @@
 <?php
+declare(strict_types=1);
 
+use App\Orchid\Screens\Dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -30,7 +32,7 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 Route::get('/', function () {
-    return redirect(route("platform.main"));
+    return redirect("admin");
 });
 
 
@@ -46,7 +48,7 @@ Route::get('/', function () {
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
+Route::screen('/main', Dashboard::class)
     ->name('platform.main');
 
 // Platform > Profile

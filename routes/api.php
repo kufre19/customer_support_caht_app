@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post("open_live_chat", function(Request $request){
+    info($request);
+    return response("ok");
+});

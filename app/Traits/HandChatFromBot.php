@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\ChatRequest;
 use App\Models\ChatSession;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,10 @@ trait HandChatFromBot {
            ->update([
                 "live_chat"=>1
            ]);
+
+           $chat_request_model = new ChatRequest();
+           $chat_request_model->customer_id = $this->user_id;
+           $chat_request_model->save();
         }
 
     }

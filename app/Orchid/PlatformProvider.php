@@ -31,10 +31,17 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Chat App')
                 ->icon('bubble')
                 ->url('chatify')
-                ->title('Navigation')
-                ->badge(function () {
-                    return 6;
-                }),
+                ->title('Navigation'),
+              
+
+            Menu::make('Chat Request')
+            ->icon('earphones-alt')
+            ->route('platform.chat-request')
+            ->badge(function () {
+                $count = session()->get("pending_request_count");
+                return $count;
+            }),
+
 
            
 

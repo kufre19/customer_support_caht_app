@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
+use App\Http\Controllers\ChatRequestController;
 use App\Http\Controllers\NewsLetterController;
+use App\Orchid\Screens\ChatRequests;
 use App\Orchid\Screens\Dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
@@ -43,6 +45,12 @@ Route::get('/', function () {
 |
 */
 Route::post("newsletters/send",[NewsLetterController::class,"send_news_letter"]);
+Route::get("chat-request", [ChatRequestController::class,"index"])->name("platform.chat-request");
+Route::put('/chat-requests/{id}', [ChatRequestController::class, 'update_chat_request'])->name('update.chat_request');
+
+
+
+// Route::screen("chat-request", ChatRequests::class)->name("platform.chat-request");
 
 
 /* 

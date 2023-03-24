@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Response;
 use App\Models\User;
 use App\Models\ChMessage as Message;
 use App\Models\ChFavorite as Favorite;
+use App\Traits\HandChatFromBot;
 use Chatify\Facades\ChatifyMessenger as Chatify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Str;
 class MessagesController extends Controller
 {
+    use HandChatFromBot;
     protected $perPage = 30;
 
     /**

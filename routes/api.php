@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Chatify\Http\Controllers\Api\MessagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post("open_live_chat", function(Request $request){
-    info($request);
-    return response("ok");
-});
+Route::post("open_live_chat", [MessagesController::class,"message_from_bot"]);

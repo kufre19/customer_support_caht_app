@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header">Create Newsletter</div>
         <div class="card-body">
-            <form method="POST" action="{{ url('platform.newsletters.store') }}">
+            <form method="POST" action="{{ url('newsletters/send') }}">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title:</label>

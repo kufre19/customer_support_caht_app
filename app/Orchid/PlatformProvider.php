@@ -36,9 +36,7 @@ class PlatformProvider extends OrchidServiceProvider
                     return 6;
                 }),
 
-            Menu::make('Send News Letter')
-                ->url('news-letter')
-                ->icon('envelope'),
+           
 
 
             // Menu::make('Basic Elements')
@@ -72,6 +70,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.systems.users')
                 ->permission('platform.systems.users')
                 ->title(__('Access rights')),
+
+            Menu::make(__('Roles'))
+                ->icon('lock')
+                ->route('platform.systems.roles')
+                ->permission('platform.systems.roles'),
 
 
         ];

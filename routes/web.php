@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Http\Controllers\NewsLetterController;
 use App\Orchid\Screens\Dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
@@ -34,6 +35,27 @@ use Tabuna\Breadcrumbs\Trail;
 Route::get('/', function () {
     return redirect("admin");
 });
+
+/* 
+|------------------------------------------------------------------------
+|CUSTOM URL AND CONTOLLERS HERE
+|------------------------------------------------------------------------
+|
+*/
+Route::post("newsletters/send",[NewsLetterController::class,"send_news_letter"]);
+
+
+/* 
+|------------------------------------------------------------------------
+|
+|------------------------------------------------------------------------
+|
+|
+|
+|
+|
+|
+*/
 
 
 /*

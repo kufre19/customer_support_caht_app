@@ -69,7 +69,7 @@ trait HandChatFromBot
         $greeting_text = "Hi Hello my name is {$name}, how may I help you today?";
         $message = $this->make_text_message($greeting_text, $customer_wa_id);
         $chat_sesseion_model = new ChatSession();
-        $chat_sesseion_model->where("user_id", $this->user_id)
+        $chat_sesseion_model->where("user_id", $customer_wa_id)
                 ->update([
                     "live_chat" => 1
                 ]);

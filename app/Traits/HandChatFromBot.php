@@ -19,6 +19,8 @@ trait HandChatFromBot {
         $this->user_id = $request->user_id;
         $this->message = $request->message;
 
+        info($request);
+
 
         if(  $this->action == "open chat")
         {

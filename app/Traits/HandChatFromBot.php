@@ -25,6 +25,7 @@ trait HandChatFromBot
         $this->message = $request->message ?? "";
 
         $user = $this->checkExistingUser($this->user_id);
+        $WaUser_id = $user->id;
         $chat_sesseion_model = new ChatSession();
         $chatSession = $chat_sesseion_model->where("user_id",$this->user_id)->first();
 
@@ -45,7 +46,7 @@ trait HandChatFromBot
             $response = $chatiffy_controller->openNewChat($request->create(
                 route("bot.open.message"),
                 "POST",
-                ["message" => $text, "sender_id" => $this->user_id, "recipient_id" => $chatSession->chatting_with]
+                ["message" => $text, "sender_id" => $WaUser_id, "recipient_id" => $chatSession->chatting_with]
             ));
             
 
@@ -60,7 +61,7 @@ trait HandChatFromBot
             return $response = $chatiffy_controller->Botsend($request->create(
                 route("bot.send.message"),
                 "POST",
-                ["message" => $this->message, "sender_id" => $this->user_id, "recipient_id" => $chatSession->chatting_with]
+                ["message" => $this->message, "sender_id" => $WaUser_id, "recipient_id" => $chatSession->chatting_with]
             ));
 
         }
@@ -123,4 +124,17 @@ trait HandChatFromBot
         $this->send_post_curl($message);
       
     }
+
+    public function is_live_chat_on($phone)
+    {
+        $session_model = new ChatSession();
+        $session = $session_model->where('whatsapp_id', '=', $phone)->first();
+        if($session->live_chat == 1)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }

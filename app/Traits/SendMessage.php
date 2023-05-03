@@ -17,10 +17,11 @@ trait SendMessage
     {
 
         $text = <<<MSG
-        Welcome to Viedial Chatbot. What would you like to know today?.
+        Welcome to Ask HSE Chatbot. Please send your Email & ID for verification.
         MSG;
+        $this->makeUserLogin();
         $this->send_post_curl($this->make_text_message($text));
-        die;
+        $this->continue_session_step();
     }
 
 
@@ -36,7 +37,7 @@ trait SendMessage
         if ($to == "") {
             $to = $this->userphone;
         }
-        $this->send_post_curl($this->make_text_message($text,$to));
+        $this->send_post_curl($this->make_text_message($to, $text));
         return response("", 200);
     }
 
@@ -65,6 +66,7 @@ trait SendMessage
 
     public function send_post_curl($post_data)
     {
+
         $token = env("WB_TOKEN");
         $url = env("WB_MESSAGE_URL");
 
@@ -86,7 +88,10 @@ trait SendMessage
         ));
 
         $response = curl_exec($curl);
-        echo $response;
+        $response = json_decode($response, true);
+        // echo curl_error($curl);
+        http_response_code(200);
+        return $response;
 
         // curl_close($curl);
 
@@ -119,7 +124,7 @@ trait SendMessage
 
         $response = curl_exec($curl);
         $response = json_decode($response, true);
-        echo curl_error($curl);
+        // echo curl_error($curl);
         return $response;
     }
 

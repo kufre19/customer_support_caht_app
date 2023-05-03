@@ -172,6 +172,70 @@ class MessagesController extends Controller
         ]);
     }
 
+    public function openNewChat($request)
+    {
+        //    Log::error("here");
+        // default variables
+        $error = (object)[
+            'status' => 0,
+            'message' => null
+        ];
+        $attachment = null;
+        $attachment_title = null;
+        $sender_id = $request['sender_id'];
+        $recipient_id = $request['recipient_id'];
+
+
+        // if there is attachment [file]
+        // if ($request->hasFile('file')) {
+        //     // allowed extensions
+        //     $allowed_images = Chatify::getAllowedImages();
+        //     $allowed_files  = Chatify::getAllowedFiles();
+        //     $allowed        = array_merge($allowed_images, $allowed_files);
+
+        //     $file = $request->file('file');
+        //     // check file size
+        //     if ($file->getSize() < Chatify::getMaxUploadSize()) {
+        //         if (in_array(strtolower($file->extension()), $allowed)) {
+        //             // get attachment name
+        //             $attachment_title = $file->getClientOriginalName();
+        //             // upload attachment and store the new name
+        //             $attachment = Str::uuid() . "." . $file->extension();
+        //             $file->storeAs(config('chatify.attachments.folder'), $attachment, config('chatify.storage_disk_name'));
+        //         } else {
+        //             $error->status = 1;
+        //             $error->message = "File extension not allowed!";
+        //         }
+        //     } else {
+        //         $error->status = 1;
+        //         $error->message = "File size you are trying to upload is too large!";
+        //     }
+        // }
+
+        if (!$error->status) {
+            $message = Chatify::newMessage([
+                'from_id' => $sender_id,
+                'to_id' => $recipient_id,
+                'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
+                'attachment' =>  null,
+            ]);
+            $messageData = ChatifyModified::parseMessagemodified($recipient_id, $message);
+            // info($messageData);
+
+            if ($recipient_id != $sender_id) {
+                $wa_send_response = $this->send_message_to_user($request['message'], $sender_id->phone);
+               
+            }
+        }
+
+        // send the response
+        return Response::json([
+            'status' => '200',
+            'error' => $error,
+        ]);
+    }
+
+
     /**
      * Send a message to database
      *

@@ -1,0 +1,9 @@
+POST http://0.0.0.0:8000/api/open_live_chat
+Content-Type: application/json
+
+{
+
+    "action":"open chat",
+    "user_id":"2347016791512",
+    "message":""
+}

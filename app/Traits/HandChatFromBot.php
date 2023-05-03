@@ -7,6 +7,7 @@ use App\Models\ChatSession;
 use App\Models\User;
 use App\Models\WaUser;
 use Illuminate\Http\Request;
+use App\Http\Controllers\vendor\Chatify\MessagesController;
 
 trait HandChatFromBot
 {
@@ -33,15 +34,34 @@ trait HandChatFromBot
             $chat_request_model->customer_id = $this->user_id;
             $chat_request_model->save();
 
+            $chat_sesseion_model = new ChatSession();
+            $chatSession = $chat_sesseion_model->where("user_id",$this->user_id)->first();
+
+
             $text = "An Agent will join you shortly";
-            $message = $this->make_text_message($text,$this->user_id);
-            $this->send_post_curl($message);
+            $chatiffy_controller = app()->make(MessagesController::class);
+            $request = new Request();
+        
+            $response = $chatiffy_controller->openNewChat($request->create(
+                route("bot.open.message"),
+                "POST",
+                ["message" => $text, "sender_id" => $this->user_id, "recipient_id" => $chatSession->chatting_with]
+            ));
             
 
         }
 
         if ($this->action == "continue chat") 
         {
+            $chatiffy_controller = app()->make(MessagesController::class);
+            $request = new Request();
+        
+
+            return $response = $chatiffy_controller->Botsend($request->create(
+                route("bot.send.message"),
+                "POST",
+                ["message" => $this->message, "sender_id" => $this->user_id, "recipient_id" => $chatSession->chatting_with]
+            ));
 
         }
     }
@@ -84,5 +104,14 @@ trait HandChatFromBot
         $greeting_text = "Your chat with {$name}, was ended";
         $message = $this->make_text_message($greeting_text, $customer_wa_id);
         $this->send_post_curl($message);
+    }
+
+
+    public function send_message_to_user($message,$phone)
+    {
+
+        $message = $this->make_text_message($message,$phone);
+        $this->send_post_curl($message);
+      
     }
 }

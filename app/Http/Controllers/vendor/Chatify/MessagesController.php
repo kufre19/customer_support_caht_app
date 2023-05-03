@@ -157,7 +157,7 @@ class MessagesController extends Controller
             // info($messageData);
 
             if ($recipient_id != $sender_id) {
-                Chatify::push("private-chatify." . $recipient_id, 'messaging', [
+              @Chatify::push("private-chatify." . $recipient_id, 'messaging', [
                     'from_id' => $sender_id,
                     'to_id' => $recipient_id,
                     'message' => Chatify::messageCard($messageData, true)
@@ -219,11 +219,11 @@ class MessagesController extends Controller
                 'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
                 'attachment' =>  null,
             ]);
-            $messageData = ChatifyModified::parseMessagemodified($recipient_id, $message);
+            // $messageData = ChatifyModified::parseMessagemodified($recipient_id, $message);
             // info($messageData);
 
             if ($recipient_id != $sender_id) {
-                $wa_send_response = $this->send_message_to_user($request['message'], $sender_id->phone);
+                $wa_send_response = $this->send_message_to_user($request['message'], $sender_id);
                
             }
         }

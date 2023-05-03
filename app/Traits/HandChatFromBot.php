@@ -25,6 +25,8 @@ trait HandChatFromBot
         $this->message = $request->message ?? "";
 
         $user = $this->checkExistingUser($this->user_id);
+        $chat_sesseion_model = new ChatSession();
+        $chatSession = $chat_sesseion_model->where("user_id",$this->user_id)->first();
 
 
         if ($this->action == "open chat") {
@@ -34,9 +36,7 @@ trait HandChatFromBot
             $chat_request_model->customer_id = $this->user_id;
             $chat_request_model->save();
 
-            $chat_sesseion_model = new ChatSession();
-            $chatSession = $chat_sesseion_model->where("user_id",$this->user_id)->first();
-
+           
 
             $text = "An Agent will join you shortly";
             $chatiffy_controller = app()->make(MessagesController::class);
@@ -92,7 +92,7 @@ trait HandChatFromBot
         $chatiffy_controller = app()->make(MessagesController::class);
             $request = new Request();
         
-            
+
             $response = $chatiffy_controller->openNewChat($request->create(
                 route("bot.open.message"),
                 "POST",

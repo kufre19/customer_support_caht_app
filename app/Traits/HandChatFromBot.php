@@ -128,7 +128,7 @@ trait HandChatFromBot
     public function is_live_chat_on($phone)
     {
         $session_model = new ChatSession();
-        $session = $session_model->where('whatsapp_id', '=', $phone)->first();
+        $session = $session_model->where('user_id', '=', $phone)->first();
         if($session->live_chat == 1)
         {
             return true;

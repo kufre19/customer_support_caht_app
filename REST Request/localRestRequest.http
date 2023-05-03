@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
 
-    "action":"open chat",
+    "action":"continue chat",
     "user_id":"2347016791512",
-    "message":""
+    "message":"here"
 }

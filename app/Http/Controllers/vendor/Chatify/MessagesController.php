@@ -281,6 +281,7 @@ class MessagesController extends Controller
         if (!$error->status) {
             $user_model = new WaUser();
             $user = $user_model->where("id", $request['id'])->first();
+            info($request['id']);
             if (!$this->is_live_chat_on($user->phone)) {
                 $message = Chatify::newMessage([
                     'from_id' => Auth::user()->id,

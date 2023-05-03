@@ -87,13 +87,21 @@ trait HandChatFromBot
         $user = $user_model->where("id", $admin_id)->first();
         $name = $user->name;
         $greeting_text = "Hi Hello my name is {$name}, how may I help you today?";
-        $message = $this->make_text_message($greeting_text, $customer_wa_id);
+
         $chat_sesseion_model = new ChatSession();
+        $chatiffy_controller = app()->make(MessagesController::class);
+            $request = new Request();
+        
+            $response = $chatiffy_controller->openNewChat($request->create(
+                route("bot.open.message"),
+                "POST",
+                ["message" => $greeting_text, "sender_id" => $customer_wa_id, "recipient_id" => $admin_id]
+            ));
         $chat_sesseion_model->where("user_id", $customer_wa_id)
                 ->update([
                     "live_chat" => 1
                 ]);
-        $this->send_post_curl($message);
+
     }
 
     public function auto_admin_end_message($admin_id, $customer_wa_id)

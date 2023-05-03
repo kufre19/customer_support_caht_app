@@ -92,6 +92,7 @@ trait HandChatFromBot
         $chatiffy_controller = app()->make(MessagesController::class);
             $request = new Request();
         
+            
             $response = $chatiffy_controller->openNewChat($request->create(
                 route("bot.open.message"),
                 "POST",
